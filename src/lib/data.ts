@@ -191,7 +191,7 @@ export const testimonials = [
   { text: "A arquiteta que a gente super indica!", name: "Silviane R. Barbosa", detail: "Engenheira, @silvibarbosa.eng", image: "/img/barranco-1.webp" },
   { text: "Resolver quarto de alugado sem gastar muito com marcenaria é um desafio e tanto! Ficou super acolhedor.", name: "Laís", detail: "Gestão financeira para arquitetas, sobre o quarto para aluguel", image: "/img/hero-quarto.webp" },
   { text: "Eu amei. Ficou simplesmente perfeita!", name: "Meiri Kelen", detail: "Sobre a casa no barranco", image: "/img/barranco-0.webp" },
-  { text: "Sempre uma profissional incrível, super dedicada, e dá pra ver que gosta muito do que faz.", name: "Juliane Friedrich", detail: "No Dia da Arquiteta e Urbanista", image: "/img/thais-quem.webp" },
+  { text: "Sempre uma profissional incrível, super dedicada, e dá pra ver que gosta muito do que faz.", name: "Juliane Friedrich", detail: "No Dia da Arquiteta e Urbanista", image: "/img/loft-airbnb-0.webp" },
 ];
 
 export const faq = [

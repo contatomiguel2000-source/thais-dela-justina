@@ -84,18 +84,20 @@ function CloseButton({ onClick, light = true }: { onClick: () => void; light?: b
   );
 }
 
-export function ArrowLink({ href, children, variant = "dark" }: { href: string; children: React.ReactNode; variant?: "dark" | "light" | "outline" | "outline-light" }) {
+export function ArrowLink({ href, children, variant = "dark", size = "md" }: { href: string; children: React.ReactNode; variant?: "dark" | "light" | "outline" | "outline-light" | "accent"; size?: "md" | "lg" }) {
   const ext = href.startsWith("http");
   const styles = {
     dark: "bg-ink text-paper border border-ink",
     light: "bg-paper text-ink border border-paper",
     outline: "border border-ink text-ink",
     "outline-light": "border border-paper/60 text-paper",
+    accent: "bg-accent text-paper border border-accent",
   }[variant];
-  const fill = variant === "light" || variant === "outline" ? "bg-accent" : "bg-accent";
+  const fill = variant === "accent" ? "bg-ink" : "bg-accent";
+  const big = size === "lg" ? "!px-6 !py-4 !text-[0.88rem] shadow-[0_10px_30px_rgba(0,0,0,0.35)]" : "";
   return (
     <Magnetic strength={0.2}>
-      <a href={href} {...(ext ? { target: "_blank", rel: "noopener noreferrer" } : {})} className={`btn group relative overflow-hidden ${styles}`}>
+      <a href={href} {...(ext ? { target: "_blank", rel: "noopener noreferrer" } : {})} className={`btn group relative overflow-hidden ${styles} ${big}`}>
         <span className={`absolute inset-0 -translate-x-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0 ${fill}`} />
         <span className="relative transition-colors duration-300 group-hover:text-paper">{children}</span>
         <span className="relative transition-transform duration-300 group-hover:translate-x-1 group-hover:text-paper">
@@ -178,7 +180,9 @@ function RollingNumber({ value, delay = 0 }: { value: string; delay?: number }) 
       {value.split("").map((ch, i) =>
         /\d/.test(ch) ? (
           <span key={i} className="relative inline-block h-[1em] overflow-hidden" aria-hidden>
-            <span className="flex flex-col transition-transform duration-[1.8s] ease-[cubic-bezier(0.16,1,0.3,1)]" style={{ transform: `translateY(-${v || reduced() ? Number(ch) * 10 : 0}%)`, transitionDelay: `${delay + i * 120}ms` }}>
+            {/* o dígito final (invisível) define a largura da coluna: sem buraco depois do "1" */}
+            <span className="invisible">{ch}</span>
+            <span className="absolute inset-x-0 top-0 flex flex-col items-center transition-transform duration-[1.8s] ease-[cubic-bezier(0.16,1,0.3,1)]" style={{ transform: `translateY(-${v || reduced() ? Number(ch) * 10 : 0}%)`, transitionDelay: `${delay + i * 120}ms` }}>
               {Array.from({ length: 10 }, (_, d) => (
                 <span key={d} className="h-[1em]">
                   {d}
@@ -232,9 +236,9 @@ export function Hero({ stats }: { stats: { value: string; unit: string; label: s
 
       <div className={`${wrap} relative flex h-full flex-col justify-end pb-10 pt-28 md:justify-center md:pb-0`} style={{ opacity: 1 - k * 1.3, transform: `translateY(${k * -60}px)` }}>
         <p className="bracket animate-[fadeUp_0.9s_0.6s_both] text-paper/85">Arquiteta do LOFT · Medianeira, PR</p>
-        <h1 className="t-hero mt-5 max-w-[46rem]">
+        <h1 className="t-hero mt-5">
           {title.map((line, i) => (
-            <span key={line} className="block overflow-hidden pb-[0.06em]">
+            <span key={line} className="block overflow-hidden pb-[0.06em] md:whitespace-nowrap">
               <span className={`block animate-[riseIn_1.1s_cubic-bezier(0.16,1,0.3,1)_both] ${i === 2 ? "text-accent-soft" : ""}`} style={{ animationDelay: `${0.7 + i * 0.12}s` }}>
                 {line}
               </span>
@@ -243,11 +247,11 @@ export function Hero({ stats }: { stats: { value: string; unit: string; label: s
         </h1>
         <p className="mt-6 max-w-[30rem] animate-[fadeUp_1s_1.15s_both] text-[1rem] leading-relaxed text-paper/85">Casas, sobrados, geminadas, kitnets e lofts pensados para a sua realidade. Atendo online todo o Brasil e presencialmente em Medianeira.</p>
         <div className="mt-8 flex animate-[fadeUp_1s_1.3s_both] flex-wrap gap-3">
-          <ArrowLink href="#projetos" variant="outline-light">
-            Ver projetos
-          </ArrowLink>
-          <ArrowLink href={studio.whatsapp} variant="light">
+          <ArrowLink href={studio.whatsapp} variant="accent" size="lg">
             Pedir orçamento
+          </ArrowLink>
+          <ArrowLink href="#projetos" variant="light" size="lg">
+            Ver projetos
           </ArrowLink>
         </div>
       </div>
